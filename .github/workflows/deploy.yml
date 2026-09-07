@@ -8,7 +8,7 @@ on:
                 required: true
                 type: string
         secrets:
-            aws-role-arn:
+            AWS_ROLE_ARN:
                 description: 'AWS IAM role ARN to assume for deployment'
                 required: true
 jobs:
