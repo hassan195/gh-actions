@@ -34,12 +34,5 @@ jobs:
                   role-to-assume: ${{ secrets.aws-role-arn }}
                   aws-region: ap-southeast-2
 
-##            - name: Debug OIDC Token Claims
-##              run: |
-##                echo "Requesting OIDC token..."
-##                ACTIONS_ID_TOKEN=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
-##                echo "JWT Claims:"
-##                jq -R 'split(".") | .[1] | @base64d | fromjson' <<< "$ACTIONS_ID_TOKEN"
-
             - name: Deploy to ${{ inputs.environment }}
               run: make deploy ENV=${{ inputs.environment }}
