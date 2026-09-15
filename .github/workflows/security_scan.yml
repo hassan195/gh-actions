@@ -1,0 +1,37 @@
+name: Reusable Security Scan Workflow
+on:
+    workflow_call:
+        inputs:
+            severity:
+                description: 'Severity level for the security scan (e.g., low, medium, high)'
+                required: false
+                default: 'CRITICAL,HIGH'
+                type: string
+
+jobs:
+    trivy-config-scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4 
+
+            - name: Trivy Security Scan
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                scan-type: config
+                scan-ref: .
+                severity: ${{ inputs.severity }}
+                exit-code: 1
+    trivy-fs-scan:
+        runs-on: ubuntu-latest
+        steps:  
+            - name : Checkout code
+              uses: actions/checkout@v4
+            - name: Trivy File System Scan
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                scan-type: fs
+                scan-ref: .
+                scanners: "vuln,secret,misconfig"
+                severity: ${{ inputs.severity }}
+                exit-code: 1
