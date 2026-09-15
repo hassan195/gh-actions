@@ -7,6 +7,11 @@ on:
                 required: false
                 default: 'CRITICAL,HIGH'
                 type: string
+            scan-ref:
+                description: 'Path to scan for security vulnerabilities'
+                required: false
+                default: '.'
+                type: string
 
 jobs:
     trivy-config-scan:
@@ -19,7 +24,7 @@ jobs:
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                 scan-type: config
-                scan-ref: .
+                scan-ref: ${{ inputs.scan-ref }}
                 severity: ${{ inputs.severity }}
                 exit-code: 1
     trivy-fs-scan:
@@ -31,7 +36,7 @@ jobs:
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                 scan-type: fs
-                scan-ref: .
+                scan-ref: ${{ inputs.scan-ref }}
                 scanners: "vuln,secret,misconfig"
                 severity: ${{ inputs.severity }}
                 exit-code: 1
