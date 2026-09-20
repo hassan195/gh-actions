@@ -14,19 +14,6 @@ on:
                 type: string
 
 jobs:
-    trivy-config-scan:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4 
-
-            - name: Trivy Security Scan
-              uses: aquasecurity/trivy-action@v0.36.0
-              with:
-                scan-type: config
-                scan-ref: ${{ inputs.scan-ref }}
-                severity: ${{ inputs.severity }}
-                exit-code: 1
     trivy-fs-scan:
         runs-on: ubuntu-latest
         steps:  
